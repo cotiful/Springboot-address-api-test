@@ -12,7 +12,7 @@
     <a href="https://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey=devU01TX0FVVEgyMDIyMDUyMzEwNDk0ODExMjYwMDI=&returnUrl=http://localhost:8080/juso/callback&resultType=4">주소찾기 하이퍼링크</a>
     <br/>
     <button onclick="jusoPopup()">주소찾기</button><br/>
-    <input type="text" value="" />    
+    <input type="text" value="" / id="roadFullAddr">    
 
     <script>
         function jusoPopup(){
@@ -20,6 +20,14 @@
             window.open(jusoUrl, "pop", "width=500,height=420, resizable=yes");
         }
         
+       async function jusoCheck(){
+            let response = await fetch("/juso/check");
+            let responseParse = await response.text();
+            console.log(responseParse);
+            $("#roadFullAddr").val(responseParse);
+        }
+       setInterval(jusoCheck, 1000);
+
     </script>
 </body>
 </html>

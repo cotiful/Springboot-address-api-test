@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class JusoController {
@@ -15,8 +16,15 @@ public class JusoController {
         return "home";
     }
 
+    // 해당 콜백이 호출되면 push 해주는 것이 좋다. (웹소켓, SSE)
     @PostMapping("/juso/callback")
     public void jusoCallback(String roadFullAddr) {
         System.out.println(roadFullAddr);
+        Store.roadFullAddr = roadFullAddr;
+    }
+
+    @GetMapping("/juso/check")
+    public @ResponseBody String jusoCheck() {
+        return Store.roadFullAddr;
     }
 }
